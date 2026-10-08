@@ -1,0 +1,40 @@
+[tool.ruff]
+# Длина строки (совпадает с Black)
+line-length = 88
+
+# Отступы в пробелах
+indent-width = 4
+
+# Минимальная поддерживаемая версия Python
+target-version = "py310"
+
+[tool.ruff.lint]
+# Включить базовый набор правил (F, E, W, B, UP и др.)
+select = [
+    "ALL"
+]
+
+# Игнорировать отдельные правила при необходимости
+ignore = ["D100", "CPY001", "D103", "D203", "D213"]
+
+# Автоматические исправления
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+# Использовать двойные кавычки (как в Black)
+quote-style = "double"
+
+# Стиль отступов
+indent-style = "space"
+
+# Форматировать код внутри docstring
+docstring-code-format = true
+
+
+
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
