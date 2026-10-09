@@ -7,7 +7,7 @@ import time_utils
 
 class Arguments(argparse.Namespace):
     currency: list[str]
-    date: str
+    date: str | None
 
     def validate(self) -> bool:
         return True
