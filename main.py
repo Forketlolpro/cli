@@ -1,9 +1,12 @@
+
 import logging
 import sys
 
 from arguments import Arguments
 from exchange_rate_api import fetch_exchange_rates
 from logging_config import setup_logging
+from print import print_into_json
+from process import process_rates
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +21,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.exit(1)
 
         exchange_rates = fetch_exchange_rates(arguments)
-        print(exchange_rates)
+        print_into_json(process_rates(exchange_rates, arguments), arguments.output)
     ## Один централизованный обработчик ошибок. Правильно ли это?
     except Exception as e:
         logger.info("Handle error in main: %s", e)

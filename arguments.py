@@ -8,6 +8,7 @@ import time_utils
 class Arguments(argparse.Namespace):
     currency: list[str]
     date: str | None
+    output: str
 
     def validate(self) -> bool:
         return True
@@ -35,6 +36,14 @@ class Arguments(argparse.Namespace):
             type=str,
             help="за определенную дату",
             default=time_utils.get_local_day(),
+        )
+
+        parser.add_argument(
+            "-o",
+            "--output",
+            type=str,
+            help="Имя файла",
+            default="rates.json",
         )
 
         return parser.parse_args(argv, namespace=Arguments())
