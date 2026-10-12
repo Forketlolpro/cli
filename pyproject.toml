@@ -35,6 +35,6 @@ docstring-code-format = true
 
 [tool.pyrefly]
 project-includes = [
-    "**/*.py*",
-    "**/*.ipynb",
+    "src/**/*.py*",
+    "src/**/*.ipynb",
 ]
