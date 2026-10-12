@@ -15,7 +15,7 @@ select = [
 ]
 
 # Игнорировать отдельные правила при необходимости
-ignore = ["D100", "CPY001", "D103", "D102", "D101", "D203", "D105", "D213"]
+ignore = ["D100", "CPY001", "D103", "D102", "D101", "D203", "D105", "D213", "S101"]
 
 # Автоматические исправления
 fixable = ["ALL"]
@@ -38,3 +38,10 @@ project-includes = [
     "src/**/*.py*",
     "src/**/*.ipynb",
 ]
+
+[tool.pytest.ini_options]
+    pythonpath = ["."]
+    minversion = "9.0"
+    testpaths = ["tests"]
+    python_files = ["test_*.py", "*_test.py"]
+    addopts = ["-vv", "-ra", "-q", "--import-mode=importlib"]
