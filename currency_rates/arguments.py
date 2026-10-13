@@ -2,16 +2,19 @@ from __future__ import annotations
 
 import argparse
 
-import time_utils
+from currency_rates.errors import VALID_CUR_LENGTH, ArgumentError
+from currency_rates.time_utils import get_local_day
 
 
 class Arguments(argparse.Namespace):
-    currency: list[str]
+    currencies: list[str]
     date: str | None
     output: str
 
-    def validate(self) -> bool:
-        return True
+    def validate(self) -> None:
+        invalid_currency = next((curr for curr in self.currencies if len(curr) != VALID_CUR_LENGTH), None)
+        if invalid_currency:
+            raise ArgumentError(invalid_currency)
 
     def __str__(self) -> str:
         return f"[Arguments]: \n currency: {self.currency} \n date: {self.date}"
@@ -23,9 +26,9 @@ class Arguments(argparse.Namespace):
         )
 
         parser.add_argument(
-            "-currency",
+            "--currencies",
             nargs="+",
-            choices=["USD", "RUB", "EUR", "CNY"],
+            type=str,
             required=True,
             help="Укажите одну или несколько валют через пробел (например: USD RUB)",
         )
@@ -35,7 +38,7 @@ class Arguments(argparse.Namespace):
             "--date",
             type=str,
             help="за определенную дату",
-            default=time_utils.get_local_day(),
+            default=get_local_day(),
         )
 
         parser.add_argument(

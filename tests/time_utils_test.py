@@ -1,6 +1,6 @@
 import datetime
 
-from src.time_utils import get_local_date
+from currency_rates.time_utils import get_local_date
 
 
 def test_get_local_date() -> None:

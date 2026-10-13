@@ -4,12 +4,14 @@ from typing import TypedDict
 
 import requests
 
-from arguments import Arguments
+from currency_rates.arguments import Arguments
+from currency_rates.errors import ApiError
 
 logger = logging.getLogger(__name__)
 
 url = "https://www.cbr-xml-daily.ru/daily_json.js"
 daly_url = "https://www.cbr-xml-daily.ru/archive/{0}/{1}/{2}/daily_json.js"
+
 
 @dataclass
 class ExchangeRateParams:
@@ -19,18 +21,18 @@ class ExchangeRateParams:
         if self.date is None:
             return url
         year, month, day = self.date.split("-")
-        return url.format(year, month, day)
+        return daly_url.format(year, month, day)
 
 
 class Valute(TypedDict):
     CharCode: str
     ID: str
     Name: str
-    Nominal: str
+    Nominal: int
     NumCode: str
-    Previous: str
-    value: str
-    Value: str
+    Previous: float
+    Value: float
+
 
 class ExchangeResponse(TypedDict):
     Date: str
@@ -44,12 +46,11 @@ def exchange_rate_api(param: ExchangeRateParams) -> ExchangeResponse:
     try:
         response = requests.get(param.get_url(), timeout=10)
         response.raise_for_status()
-    ### Вот тут правильно ли я обрабатываю ошибки?
+        data: ExchangeResponse = response.json()
+        logger.info(data)
     except requests.exceptions.RequestException as err:
-        logger.info("RequestException: %s", err)
-        raise
+        raise ApiError(err) from err
 
-    data: ExchangeResponse = response.json()
     return data
 
 

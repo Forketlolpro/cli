@@ -1,5 +1,4 @@
 [tool.ruff]
-# Длина строки (совпадает с Black)
 line-length = 108
 
 # Отступы в пробелах
@@ -15,14 +14,13 @@ select = [
 ]
 
 # Игнорировать отдельные правила при необходимости
-ignore = ["D100", "CPY001", "D103", "D102", "D101", "D203", "D105", "D213", "S101"]
+ignore = ["D100", "CPY001", "D103", "D102", "D101", "D203", "D105", "D213", "S101", "D107"]
 
 # Автоматические исправления
 fixable = ["ALL"]
 unfixable = []
 
 [tool.ruff.format]
-# Использовать двойные кавычки (как в Black)
 quote-style = "double"
 
 # Стиль отступов
@@ -35,8 +33,8 @@ docstring-code-format = true
 
 [tool.pyrefly]
 project-includes = [
-    "src/**/*.py*",
-    "src/**/*.ipynb",
+    "currency_rates/**/*.py*",
+    "currency_rates/**/*.ipynb",
 ]
 
 [tool.pytest.ini_options]
@@ -44,4 +42,4 @@ project-includes = [
     minversion = "9.0"
     testpaths = ["tests"]
     python_files = ["test_*.py", "*_test.py"]
-    addopts = ["-vv", "-ra", "-q", "--import-mode=importlib"]
+    addopts = ["-ra", "--import-mode=importlib"]
